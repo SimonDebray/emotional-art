@@ -57,11 +57,11 @@ sharpened = (image.filter(ImageFilter.SMOOTH_MORE)).filter(ImageFilter.DETAIL).f
 
 
 
-sharpened.save('new_name.png')
+sharpened.save('new_image.png')
 hin = Image.new('RGBA', sharpened.size, (255, 0, 0, 0))
 hin.save('hint.png', 'PNG')
 
-URL = "https://dvic.devinci.fr/dgx/paints_torch/api/v1/colorizer"
+URL = "http://m.oeuvres-art.com/images/medium/la-cene-leonard-de-vinci.jpg"
 
 # defining a params dict for the parameters to be sent to the API
 
@@ -69,7 +69,7 @@ hint = open('hint.png', 'rb')
 hint_read = hint.read()
 hint_64_encode = base64.encodebytes(hint_read)
 
-myImage = open('new_name.png', 'rb')
+myImage = open('new_image.png', 'rb')
 result_read = myImage.read()
 result_64_encode = base64.encodebytes(result_read)
 

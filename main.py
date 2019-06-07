@@ -6,11 +6,10 @@ import imageio
 import scipy.ndimage
 import requests
 import json
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, ImageFilter
 import matplotlib.pyplot as plt
 import base64
 from io import BytesIO
-import random
 
 import urllib3
 
@@ -37,7 +36,9 @@ def main():
     # pool = Pool(processes=1)
 
     # Traitement Image
-    img_url = "http://www.michellart.com/Images/ArcimboldoAutumn1573_Diapo.jpg"
+    img_url = "https://fineartamerica.com/images/artworkimages/medium/1/on-the-way-to-the-dance--celebrating-cinco-de-mayo-karla-horst.jpg"
+    # img_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSHfk89RY0vfgSmIWHVUNblxb9jwMzD1hf4WgtzNfRrUywzvWSs"
+    # img_url = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_sPl3nRo5bvTX85PYTr96EV9rsrmyoDEFGRUSDgprXoQnSXAi"
 
     start_img = imageio.imread(img_url)
 
@@ -58,6 +59,19 @@ def main():
     # Create an image object
 
     image1 = Image.open("./img/new_image.png")
+
+    # Find the edges by applying the filter ImageFilter.FIND_EDGES
+
+    # image_with_edges = (image1.filter(ImageFilter.EDGE_ENHANCE_MORE)).filter(ImageFilter.FIND_EDGES)
+
+    # display the original show
+    # inverted_image = PIL.ImageOps.invert(image_with_edges)
+
+    sharpened = (image1.filter(ImageFilter.SMOOTH_MORE)).filter(ImageFilter.DETAIL).filter(ImageFilter.CONTOUR)
+
+    image1 = sharpened
+
+    image1.save("./img/new_image.png")
 
     # display the new image with edge detection done
 
@@ -209,18 +223,12 @@ def new_hint(size, emotion):
 
     draw = ImageDraw.Draw(hin)
 
-    if random.choice([True, False]):
-        draw.line((size[0] / 3, size[1] / 4 + 2, size[0] / 3, size[1] / 4), fill=main_color, width=2)
-    if random.choice([True, False]):
-        draw.line((size[0] / 3 * 2, size[1] / 4 + 2, size[0] / 3 * 2, size[1] / 4), fill=main_color, width=2)
-    if random.choice([True, False]):
-        draw.line((size[0] / 3, size[1] / 4 * 2 + 2, size[0] / 3, size[1] / 4 * 2), fill=second_color, width=2)
-    if random.choice([True, False]):
-        draw.line((size[0] / 3 * 2, size[1] / 4 * 2 + 2, size[0] / 3 * 2, size[1] / 4 * 2), fill=second_color, width=2)
-    if random.choice([True, False]):
-        draw.line((size[0] / 3, size[1] / 4 * 3 + 2, size[0] / 3, size[1] / 4 * 3), fill=third_color, width=2)
-    if random.choice([True, False]):
-        draw.line((size[0] / 3 * 2, size[1] / 4 * 3 + 2, size[0] / 3 * 2, size[1] / 4 * 3), fill=third_color, width=2)
+    draw.line((size[0] / 3, size[1] / 4 + 4, size[0] / 3, size[1] / 4), fill=main_color, width=3)
+    draw.line((size[0] / 3 * 2, size[1] / 4 + 4, size[0] / 3 * 2, size[1] / 4), fill=main_color, width=3)
+    draw.line((size[0] / 3, size[1] / 4 * 2 + 4, size[0] / 3, size[1] / 4 * 2), fill=second_color, width=2)
+    draw.line((size[0] / 3 * 2, size[1] / 4 * 2 + 4, size[0] / 3 * 2, size[1] / 4 * 2), fill=second_color, width=2)
+    draw.line((size[0] / 3, size[1] / 4 * 3 + 4, size[0] / 3, size[1] / 4 * 3), fill=third_color, width=2)
+    draw.line((size[0] / 3 * 2, size[1] / 4 * 3 + 4, size[0] / 3 * 2, size[1] / 4 * 3), fill=third_color, width=2)
 
     hin.save('./img/hint.png', 'PNG')
 
