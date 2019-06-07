@@ -13,11 +13,9 @@ from io import BytesIO
 def grayscale(rgb): return np.dot(rgb[..., :3], [0.200, 0.500, 0.114])
 
 
-img = "https://i.pinimg.com/736x/ce/52/d3/ce52d32597fbc0fbc60a2696f4012733.jpg"
+img = "https://upload.wikimedia.org/wikipedia/commons/5/52/La_Joconde.jpg"
 
 start_img = imageio.imread(img)
-
-# start_img.shape(196, 160, 30)
 
 gray_img = grayscale(start_img)
 
@@ -56,6 +54,8 @@ inverted_image = PIL.ImageOps.invert(imageWithEdges)
 sharpened = (image.filter(ImageFilter.SMOOTH_MORE)).filter(ImageFilter.DETAIL).filter(ImageFilter.CONTOUR)
 
 # display the new image with edge detection done
+
+
 
 sharpened.save('new_name.png')
 hin = Image.new('RGBA', sharpened.size, (255, 0, 0, 0))
